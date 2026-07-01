@@ -10,43 +10,16 @@
     "typeAware": true,
     "typeCheck": true
   },
-  "settings": {
-    "boundaries/elements": [
-      { "type": "app", "pattern": "src/app/*" },
-      { "type": "feature", "pattern": "src/features/*", "capture": ["featureName"] },
-      { "type": "shared", "pattern": "src/shared/*" },
-      { "type": "stores", "pattern": "src/stores/*" }
-    ]
-  },
   "rules": {
     "no-console": ["warn", { "allow": ["warn", "error"] }],
     "react/react-compiler": "error",
-    "import/order": [
-      "warn",
-      {
-        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
-        "newlines-between": "always",
-        "alphabetize": { "order": "asc" }
-      }
-    ],
     "react/rules-of-hooks": "error",
+    "sort-imports": "warn",
     "typescript/no-floating-promises": "error",
     "typescript/no-misused-promises": "error",
     "react/only-export-components": ["warn", { "allowConstantExport": true }],
     "react/react-in-jsx-scope": "off",
-    "react/jsx-no-script-url": "error",
-    "boundaries/element-types": [
-      "error",
-      {
-        "default": "disallow",
-        "rules": [
-          { "from": "app", "allow": ["feature", "shared", "stores"] },
-          { "from": "feature", "allow": ["shared", "stores"] },
-          { "from": "shared", "allow": ["shared"] },
-          { "from": "stores", "allow": ["shared"] }
-        ]
-      }
-    ]
+    "react/jsx-no-script-url": "error"
   },
   "ignorePatterns": ["dist/**", "node_modules/**", "coverage/**"]
 }

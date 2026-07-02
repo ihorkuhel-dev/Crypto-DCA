@@ -1,12 +1,19 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
+import { tanstackRouter } from '@tanstack/router-plugin/vite';
 
 export default defineConfig(({ mode }) => ({
   resolve: {
     tsconfigPaths: true,
   },
   plugins: [
+    tanstackRouter({
+      target: 'react',
+      routesDirectory: './src/app/routes',
+      generatedRouteTree: './src/app/route-tree.gen.ts',
+      autoCodeSplitting: true,
+    }),
     react(),
     mode === 'analyze' &&
       visualizer({

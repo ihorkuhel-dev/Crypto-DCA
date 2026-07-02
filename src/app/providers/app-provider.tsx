@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { queryClient } from '@/shared/lib/query-client.ts';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-export default function AppProvider({ children }: { children: ReactNode }) {
+export function AppProvider({ children }: { children: ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       {children}

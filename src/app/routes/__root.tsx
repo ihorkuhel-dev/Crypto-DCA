@@ -1,4 +1,5 @@
-import { createRootRoute, Outlet } from '@tanstack/react-router';
+import {Outlet, createRootRoute} from '@tanstack/react-router';
+import {Toaster} from 'sonner';
 
 // import { RouteErrorBoundary } from '@/shared/components/route-error-boundary';
 // import { RouteFallback } from '@/shared/components/route-fallback';
@@ -8,6 +9,7 @@ export const Route = createRootRoute({
   // pendingComponent: RouteFallback,
   component: () => (
     <>
+      <Toaster />
       <Outlet />
     </>
   ),

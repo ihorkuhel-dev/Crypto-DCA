@@ -20,6 +20,7 @@
     }
   },
   "title": "Settings",
+  "description": "Configure your application preferences, appearance, language, and manage local database storage.",
   "dangerZone": {
     "title": "Danger Zone",
     "deleteButton": "Delete all data",

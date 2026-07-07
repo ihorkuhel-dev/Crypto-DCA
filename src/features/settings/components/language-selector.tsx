@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select.tsx';
-import {Field, FieldLabel} from '@/components/ui/field.tsx';
+import { Field, FieldLabel } from '@/components/ui/field.tsx';
 
 export function LanguageSelector() {
   const { t, i18n } = useTranslation('settings');
@@ -35,15 +35,21 @@ export function LanguageSelector() {
     }));
   }, [supportedLngs, t]);
 
+  const currentLabel = useMemo(() => {
+    return (
+      items.find((item) => item.value === currentLanguage)?.label ??
+      currentLanguage.toUpperCase()
+    );
+  }, [items, currentLanguage]);
+
   return (
     <Field>
       <FieldLabel>{t('language.label', 'Select language:')}</FieldLabel>
-      <Select
-        value={currentLanguage}
-        onValueChange={handleLanguageChange}
-      >
+      <Select value={currentLanguage} onValueChange={handleLanguageChange}>
         <SelectTrigger className="w-full max-w-48">
-          <SelectValue placeholder={t('language.placeholder', 'Select language')} />
+          <SelectValue placeholder={t('language.placeholder', 'Select language')}>
+            {currentLabel}
+          </SelectValue>
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>

@@ -1,4 +1,4 @@
-import {useParams} from '@tanstack/react-router';
+import { useParams } from '@tanstack/react-router';
 
 export function CalculationDetailPage() {
   const params = useParams({ strict: false });

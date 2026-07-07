@@ -9,17 +9,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select.tsx';
-import {useTheme} from '@/app/providers/theme-provider.tsx';
-import {Field, FieldLabel} from '@/components/ui/field.tsx';
+import { useTheme } from '@/app/providers/theme-provider.tsx';
+import { Field, FieldLabel } from '@/components/ui/field.tsx';
 
 export function ThemeSelector() {
   const { t } = useTranslation('settings');
 
-  const items = useMemo(() => [
-    { label: t('theme.options.system'), value: 'system' },
-    { label: t('theme.options.light'), value: 'light' },
-    { label: t('theme.options.dark'), value: 'dark' },
-  ], [t]);
+  const items = useMemo(
+    () => [
+      { label: t('theme.options.system'), value: 'system' },
+      { label: t('theme.options.light'), value: 'light' },
+      { label: t('theme.options.dark'), value: 'dark' },
+    ],
+    [t],
+  );
 
   const { theme, setTheme } = useTheme();
 
@@ -34,11 +37,7 @@ export function ThemeSelector() {
   return (
     <Field>
       <FieldLabel>{t('theme.label')}</FieldLabel>
-      <Select
-        items={items}
-        value={theme}
-        onValueChange={handleThemeChange}
-      >
+      <Select items={items} value={theme} onValueChange={handleThemeChange}>
         <SelectTrigger className="w-full max-w-48">
           <SelectValue placeholder={t('theme.placeholder')} />
         </SelectTrigger>

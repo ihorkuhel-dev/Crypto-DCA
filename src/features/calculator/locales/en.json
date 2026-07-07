@@ -5,7 +5,9 @@
   "descriptionEdit": "Modify parameters and update your existing DCA calculation.",
   "form": {
     "symbol": "Select Asset",
+    "period": "Investment Period",
     "startDate": "Start Date",
+    "endDate": "End Date",
     "totalCapitalUsd": "Total Capital (USD)",
     "frequency": "Purchase Frequency",
     "stakingEnabled": "Staking (APY)",
@@ -32,7 +34,10 @@
     "dca": "Will make {{count}} purchases. One transaction amount: {{amount}}.",
     "staking": "Staking reward: +{{yield}} {{symbol}} over the entire period.",
     "loadingPrice": "Fetching historical prices...",
-    "noHistory": "Select a coin to preview historical prices."
+    "noHistory": "Select a coin to preview historical prices.",
+    "earliestDate": "Listing date on Binance",
+    "pickDateRange": "Pick a date range",
+    "noAssetsFound": "No assets found"
   },
   "actions": {
     "create": "Calculate & Add",
@@ -42,6 +47,8 @@
   "validation": {
     "symbol": "Please select a coin",
     "startDate": "Start date must be in the past",
+    "endDateError": "End date must be in the past or today",
+    "dateRange": "Start date must be before or equal to end date",
     "capital": "Capital must be at least $10",
     "apy": "APY rate must be positive"
   },

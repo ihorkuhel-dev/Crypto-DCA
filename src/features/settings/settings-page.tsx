@@ -1,8 +1,8 @@
-import {useTranslation} from 'react-i18next';
-import {ThemeSelector} from '@/features/settings/components/theme-selector.tsx';
-import {LanguageSelector} from '@/features/settings/components/language-selector.tsx';
-import {DangerZone} from '@/features/settings/components/danger-zone.tsx';
-import {useDocumentMetadata} from '@/hooks/use-document-metadata.ts';
+import { useTranslation } from 'react-i18next';
+import { ThemeSelector } from '@/features/settings/components/theme-selector.tsx';
+import { LanguageSelector } from '@/features/settings/components/language-selector.tsx';
+import { DangerZone } from '@/features/settings/components/danger-zone.tsx';
+import { useDocumentMetadata } from '@/hooks/use-document-metadata.ts';
 
 export function SettingsPage() {
   const { t } = useTranslation('settings');

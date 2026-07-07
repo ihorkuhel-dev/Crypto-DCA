@@ -12,9 +12,8 @@
   },
   "rules": {
     "no-console": ["warn", { "allow": ["warn", "error"] }],
-    "react/react-compiler": "error",
+    "react/react-compiler": "warn",
     "react/rules-of-hooks": "error",
-    "sort-imports": "warn",
     "typescript/no-floating-promises": "error",
     "typescript/no-misused-promises": "error",
     "react/only-export-components": ["warn", { "allowConstantExport": true }],

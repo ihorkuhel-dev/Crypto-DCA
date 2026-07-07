@@ -12,9 +12,9 @@ import {
 } from '@/components/ui/combobox.tsx';
 import { Field, FieldLabel } from '@/components/ui/field.tsx';
 import {
+  useAssetVirtualizer,
   useBinanceAssets,
   useFilteredAssets,
-  useAssetVirtualizer,
 } from '../hooks/use-binance-assets.ts';
 
 interface AssetSelectorProps {
@@ -121,9 +121,7 @@ export function AssetSelector({ control, error }: AssetSelectorProps) {
                         >
                           <ComboboxItem value={item.symbol}>
                             <span className="font-semibold">{item.baseAsset}</span>
-                            <span className="text-muted-foreground text-xs">
-                              {' '}({item.symbol})
-                            </span>
+                            <span className="text-muted-foreground text-xs"> ({item.symbol})</span>
                           </ComboboxItem>
                         </div>
                       );

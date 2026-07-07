@@ -39,8 +39,7 @@ export function LanguageSelector() {
 
   const currentLabel = useMemo(() => {
     return (
-      items.find((item) => item.value === currentLanguage)?.label ??
-      currentLanguage.toUpperCase()
+      items.find((item) => item.value === currentLanguage)?.label ?? currentLanguage.toUpperCase()
     );
   }, [items, currentLanguage]);
 
@@ -49,9 +48,7 @@ export function LanguageSelector() {
       <FieldLabel>{t('language.label')}</FieldLabel>
       <Select value={currentLanguage} onValueChange={handleLanguageChange}>
         <SelectTrigger className="w-full max-w-48">
-          <SelectValue placeholder={t('language.placeholder')}>
-            {currentLabel}
-          </SelectValue>
+          <SelectValue placeholder={t('language.placeholder')}>{currentLabel}</SelectValue>
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>

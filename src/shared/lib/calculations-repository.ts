@@ -1,4 +1,4 @@
-import {type Calculation, type InvestmentTransaction, db} from './dexie-db';
+import { type Calculation, type InvestmentTransaction, db } from './dexie-db';
 
 export const calculationsRepository = {
   list: () =>

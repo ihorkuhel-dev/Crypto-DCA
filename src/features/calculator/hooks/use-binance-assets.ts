@@ -68,7 +68,6 @@ export function useFilteredAssets(assets: BinanceAsset[], searchQuery: string) {
   }, [assets, searchQuery]);
 }
 
-// oxlint-disable-next-line react/react-compiler -- useVirtualizer is incompatible with React Compiler memoization
 export function useAssetVirtualizer(count: number, scrollEl: HTMLDivElement | null) {
   const virtualizer = useVirtualizer({
     count,

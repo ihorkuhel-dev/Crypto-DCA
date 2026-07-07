@@ -16,10 +16,6 @@ interface SimulateDcaParams {
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
-/**
- * Генерирует список временных меток DCA-покупок.
- * Вынесена в чистую функцию для изолированного тестирования.
- */
 function generatePurchaseDates(start: number, end: number, frequency: string): number[] {
   const dates: number[] = [];
   let current = start;
@@ -45,10 +41,6 @@ function generatePurchaseDates(start: number, end: number, frequency: string): n
   return dates.length > 0 ? dates : [end];
 }
 
-/**
- * Строит Map<нормализованный_timestamp → price> из массива klines.
- * Нормализуем к началу суток (floor to day) для быстрого поиска O(1).
- */
 function buildKlinesMap(klines: { timestamp: number; price: number }[]): Map<number, number> {
   const map = new Map<number, number>();
   for (const kl of klines) {
@@ -58,15 +50,10 @@ function buildKlinesMap(klines: { timestamp: number; price: number }[]): Map<num
   return map;
 }
 
-/**
- * Ищет цену на дату `ts`. Сначала точное совпадение, затем ближайшее в пределах ±3 дней.
- * Сложность: O(1) для точного совпадения, O(k) для поиска ближайшего (k≤6 итераций).
- */
 function findPrice(map: Map<number, number>, ts: number, fallback: number): number {
   const dayKey = Math.floor(ts / DAY_MS) * DAY_MS;
   if (map.has(dayKey)) return map.get(dayKey)!;
 
-  // Ищем в ±3 дней от даты
   for (let offset = 1; offset <= 3; offset++) {
     const prev = map.get(dayKey - offset * DAY_MS);
     if (prev !== undefined) return prev;
@@ -96,7 +83,6 @@ export async function simulateDca({
   const startTs = new Date(startDate).getTime();
   const endTs = new Date(endDate).getTime();
 
-  // Загружаем котировки и строим O(1)-Map вместо O(n) find в цикле
   const klines = await db.klines.where('symbol').equals(symbol).sortBy('timestamp');
   const klinesMap = buildKlinesMap(klines);
   const lastKlinePrice = klines.at(-1)?.price ?? 1;
@@ -118,7 +104,6 @@ export async function simulateDca({
     const coinPrice = findPrice(klinesMap, ts, lastKlinePrice);
     const coinsBought = coinPrice > 0 ? txAmount / coinPrice : 0;
 
-    // Считаем стейкинг-доход за прошедший период
     if (stakingEnabled && k > 0 && r > 0) {
       const days = (ts - lastStakingCalculationTs) / DAY_MS;
 

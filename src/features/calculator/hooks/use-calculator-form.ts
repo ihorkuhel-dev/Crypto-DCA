@@ -32,7 +32,10 @@ export function useCalculatorForm(id: string | undefined) {
   type FormValues = z.infer<typeof formSchema>;
 
   const existingCalculation = useLiveQuery<Calculation | null>(
-    () => (isEditMode && id ? calculationsRepository.getById(id).then((res) => res ?? null) : Promise.resolve(null)),
+    () =>
+      isEditMode && id
+        ? calculationsRepository.getById(id).then((res) => res ?? null)
+        : Promise.resolve(null),
     [id],
   );
 

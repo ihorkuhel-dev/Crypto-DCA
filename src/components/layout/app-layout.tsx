@@ -1,6 +1,6 @@
-import type {ReactNode} from 'react';
-import {Footer} from '@/components/layout/footer.tsx';
-import {Header} from '@/components/layout/header.tsx';
+import type { ReactNode } from 'react';
+import { Footer } from '@/components/layout/footer.tsx';
+import { Header } from '@/components/layout/header.tsx';
 
 interface AppLayoutProps {
   children: ReactNode;

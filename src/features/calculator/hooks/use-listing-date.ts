@@ -13,14 +13,16 @@ export function useListingDate(symbol: string | undefined) {
     if (symbol) {
       setIsLoading(true);
 
-      db.cachedListingDates.get(symbol)
+      db.cachedListingDates
+        .get(symbol)
         .then((cached) => {
           if (!active) return;
           if (cached) {
             setListingTimestamp(cached.listingTimestamp);
             setIsLoading(false);
           } else {
-            binanceClient.getEarliestAvailableDate(symbol)
+            binanceClient
+              .getEarliestAvailableDate(symbol)
               .then((timestamp) => {
                 if (!active) return;
                 if (timestamp !== null) {

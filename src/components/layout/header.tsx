@@ -5,12 +5,12 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
-import {Link} from '@tanstack/react-router';
-import {Route as calculatorRoute} from '@/app/routes/calculator.index.tsx';
-import {Route as dashboardRoute} from '@/app/routes/index.tsx';
-import {Route as settingsRoute} from '@/app/routes/settings.tsx';
+import { Link } from '@tanstack/react-router';
+import { Route as calculatorRoute } from '@/app/routes/calculator.index.tsx';
+import { Route as dashboardRoute } from '@/app/routes/index.tsx';
+import { Route as settingsRoute } from '@/app/routes/settings.tsx';
 
-import {Plus, Settings} from 'lucide-react';
+import { Plus, Settings } from 'lucide-react';
 
 export function Header() {
   return (

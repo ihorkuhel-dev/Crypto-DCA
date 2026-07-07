@@ -3,15 +3,6 @@ import { db } from '@/shared/lib/dexie-db';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
-/**
- * Синхронизирует котировки монеты из Binance в локальный Dexie-кэш.
- *
- * Обрабатывает три сценария:
- * 1. Кэша нет — загружаем весь диапазон [startDateTs, today].
- * 2. Кэш есть, но startDate раньше минимальной кэшированной даты — догружаем исторические данные.
- * 3. Кэш есть и устарел (последняя запись > 1 дня назад) — докачиваем до сегодня.
- * 4. Оба условия 2 и 3 верны — выполняем два независимых fetch-запроса.
- */
 export async function syncKlines(
   symbol: string,
   startDateTs: number,
@@ -21,7 +12,6 @@ export async function syncKlines(
   const cached = await db.klines.where('symbol').equals(symbol).sortBy('timestamp');
 
   if (cached.length === 0) {
-    // Кэша нет — загружаем всё
     await fetchAndStore(symbol, interval, startDateTs, todayTs);
     return;
   }
@@ -32,7 +22,6 @@ export async function syncKlines(
   const needHistorical = startDateTs < minCached;
   const needRecent = todayTs - maxCached > DAY_MS;
 
-  // Выполняем fetch независимо для каждого недостающего диапазона
   const fetches: Promise<void>[] = [];
 
   if (needHistorical) {

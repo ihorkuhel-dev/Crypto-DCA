@@ -147,9 +147,7 @@ export function DangerZone() {
               onClick={handleDeleteClick}
               disabled={isDeleting}
             >
-              {isDeleting
-                ? t('dangerZone.dialog.deleting')
-                : t('dangerZone.dialog.confirm')}
+              {isDeleting ? t('dangerZone.dialog.deleting') : t('dangerZone.dialog.confirm')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

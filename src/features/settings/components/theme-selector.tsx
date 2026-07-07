@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { startTransition, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Select,
@@ -23,13 +23,21 @@ export function ThemeSelector() {
 
   const { theme, setTheme } = useTheme();
 
+  const handleThemeChange = (value: string | null) => {
+    if (value) {
+      startTransition(() => {
+        setTheme(value as 'dark' | 'light' | 'system');
+      });
+    }
+  };
+
   return (
     <Field>
       <FieldLabel>{t('theme.label', 'Select theme:')}</FieldLabel>
       <Select
         items={items}
         value={theme}
-        onValueChange={(value) => setTheme(value as 'dark' | 'light' | 'system')}
+        onValueChange={handleThemeChange}
       >
         <SelectTrigger className="w-full max-w-48">
           <SelectValue placeholder={t('theme.placeholder', 'Select theme')} />

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { startTransition, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Select,
@@ -24,7 +24,9 @@ export function LanguageSelector() {
 
   const handleLanguageChange = (lng: string | null) => {
     if (lng) {
-      void i18n.changeLanguage(lng);
+      startTransition(() => {
+        void i18n.changeLanguage(lng);
+      });
     }
   };
 

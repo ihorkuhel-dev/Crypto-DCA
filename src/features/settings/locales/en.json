@@ -1,0 +1,23 @@
+{
+  "theme": {
+    "label": "Select theme:",
+    "placeholder": "Select theme",
+    "title": "Theme",
+    "options": {
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
+    }
+  },
+  "language": {
+    "label": "Select language:",
+    "placeholder": "Select language",
+    "title": "Language",
+    "options": {
+      "en": "English",
+      "ru": "Russian",
+      "de": "German"
+    }
+  },
+  "title": "Settings"
+}

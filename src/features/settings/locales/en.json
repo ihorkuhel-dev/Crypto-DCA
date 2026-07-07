@@ -1,0 +1,37 @@
+{
+  "theme": {
+    "label": "Select theme:",
+    "placeholder": "Select theme",
+    "title": "Theme",
+    "options": {
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
+    }
+  },
+  "language": {
+    "label": "Select language:",
+    "placeholder": "Select language",
+    "title": "Language",
+    "options": {
+      "en": "English",
+      "ru": "Russian",
+      "de": "German"
+    }
+  },
+  "title": "Settings",
+  "description": "Configure your application preferences, appearance, language, and manage local database storage.",
+  "dangerZone": {
+    "title": "Danger Zone",
+    "deleteButton": "Delete all data",
+    "dialog": {
+      "title": "Are you absolutely sure?",
+      "description": "This action cannot be undone. This will permanently delete all your calculations, transactions, cache files and reset all settings to defaults. About {{size}} of data will be deleted.",
+      "confirm": "Delete",
+      "cancel": "Cancel",
+      "deleting": "Deleting..."
+    },
+    "success": "All data has been successfully deleted",
+    "error": "Failed to delete data"
+  }
+}

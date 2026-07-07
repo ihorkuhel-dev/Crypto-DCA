@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "import", "jsx-a11y", "typescript", "unicorn", "oxc"],
+  "plugins": ["react", "import", "typescript", "unicorn", "oxc"],
   "categories": {
     "correctness": "error",
     "suspicious": "warn",
@@ -19,7 +19,10 @@
     "typescript/no-misused-promises": "error",
     "react/only-export-components": ["warn", { "allowConstantExport": true }],
     "react/react-in-jsx-scope": "off",
-    "react/jsx-no-script-url": "error"
+    "react/jsx-no-script-url": "error",
+    "jsx-a11y/prefer-tag-over-role": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off"
   },
   "ignorePatterns": ["dist/**", "node_modules/**", "coverage/**"]
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button.tsx';
 import {
@@ -16,24 +16,97 @@ import { db } from '@/shared/lib/dexie-db.ts';
 import { toast } from 'sonner';
 import { Trash2 } from 'lucide-react';
 
+const RELOAD_DELAY_MS = 1000;
+
+function formatBytes(bytes: number, decimals = 2): string {
+  if (bytes < 1024) return '< 1 KB';
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['KB', 'MB', 'GB'];
+  const i = Math.min(Math.floor(Math.log(bytes) / Math.log(k)) - 1, sizes.length - 1);
+  return parseFloat((bytes / Math.pow(k, i + 1)).toFixed(dm)) + ' ' + sizes[i];
+}
+
+async function calculateClearableSize(): Promise<number> {
+  let lsSize = 0;
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key) {
+      lsSize += key.length + (localStorage.getItem(key)?.length || 0);
+    }
+  }
+  const lsBytes = lsSize * 2;
+
+  let idbBytes = 0;
+  if (navigator.storage?.estimate) {
+    const estimate = await navigator.storage.estimate();
+    idbBytes = estimate.usage || 0;
+  }
+
+  let cacheBytes = 0;
+  if ('caches' in window) {
+    cacheBytes = 0;
+  }
+
+  return lsBytes + idbBytes + cacheBytes;
+}
+
 export function DangerZone() {
   const { t } = useTranslation('settings');
   const [open, setOpen] = useState(false);
+  const [sizeText, setSizeText] = useState('< 1 KB');
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const refreshSize = useCallback(async () => {
+    try {
+      const totalBytes = await calculateClearableSize();
+      setSizeText(formatBytes(totalBytes));
+    } catch (error) {
+      console.error('Failed to calculate storage size', error);
+      setSizeText('< 1 KB');
+    }
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+    calculateClearableSize()
+      .then((totalBytes) => {
+        if (active) {
+          setSizeText(formatBytes(totalBytes));
+        }
+      })
+      .catch((error) => {
+        console.error('Failed to calculate storage size', error);
+      });
+    return () => {
+      active = false;
+    };
+  }, [refreshSize]);
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    setOpen(nextOpen);
+    if (nextOpen) {
+      void refreshSize();
+    }
+  };
 
   const handleDeleteData = async () => {
+    if (isDeleting) return;
+    setIsDeleting(true);
     try {
-      await Promise.all(db.tables.map((table) => table.clear()));
+      await db.delete();
       localStorage.clear();
-      // Close dialog
+
       setOpen(false);
-      // Notify user
       toast.success(t('dangerZone.success'));
-      // Reload page to reset state completely after toast shows
+
       setTimeout(() => {
         window.location.reload();
-      }, 1000);
-    } catch {
-      toast.error('Failed to delete data');
+      }, RELOAD_DELAY_MS);
+    } catch (error) {
+      console.error('Failed to delete data', error);
+      toast.error(t('dangerZone.error'));
+      setIsDeleting(false);
     }
   };
 
@@ -47,9 +120,9 @@ export function DangerZone() {
         {t('dangerZone.title')}
       </h2>
       <p className="text-xs text-muted-foreground">
-        {t('dangerZone.dialog.description')}
+        {t('dangerZone.dialog.description', { size: sizeText })}
       </p>
-      <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialog open={open} onOpenChange={handleOpenChange}>
         <AlertDialogTrigger
           render={
             <Button variant="destructive" className="w-fit" size="sm">
@@ -62,13 +135,21 @@ export function DangerZone() {
           <AlertDialogHeader>
             <AlertDialogTitle>{t('dangerZone.dialog.title')}</AlertDialogTitle>
             <AlertDialogDescription>
-              {t('dangerZone.dialog.description')}
+              {t('dangerZone.dialog.description', { size: sizeText })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>{t('dangerZone.dialog.cancel')}</AlertDialogCancel>
-            <AlertDialogAction variant="destructive" onClick={handleDeleteClick}>
-              {t('dangerZone.dialog.confirm')}
+            <AlertDialogCancel disabled={isDeleting}>
+              {t('dangerZone.dialog.cancel')}
+            </AlertDialogCancel>
+            <AlertDialogAction
+              variant="destructive"
+              onClick={handleDeleteClick}
+              disabled={isDeleting}
+            >
+              {isDeleting
+                ? t('dangerZone.dialog.deleting')
+                : t('dangerZone.dialog.confirm')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

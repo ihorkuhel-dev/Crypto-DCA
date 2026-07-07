@@ -26,10 +26,12 @@
     "deleteButton": "Delete all data",
     "dialog": {
       "title": "Are you absolutely sure?",
-      "description": "This action cannot be undone. This will permanently delete all your calculations, transactions, cache files and reset all settings to defaults.",
+      "description": "This action cannot be undone. This will permanently delete all your calculations, transactions, cache files and reset all settings to defaults. About {{size}} of data will be deleted.",
       "confirm": "Delete",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "deleting": "Deleting..."
     },
-    "success": "All data has been successfully deleted"
+    "success": "All data has been successfully deleted",
+    "error": "Failed to delete data"
   }
 }

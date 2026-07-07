@@ -2,11 +2,10 @@ import {z} from 'zod';
 
 export const calculatorFormSchema = z
   .object({
-    coinId: z.string().min(1, 'Выберите монету'),
-    coinSymbol: z.string().min(1),
+    symbol: z.string().min(1, 'Выберите торговую пару (например, BTCUSDT)'),
     totalCapitalUsd: z.number().positive('Сумма должна быть больше нуля'),
     startDate: z.string().date(),
-    frequency: z.enum(['daily', 'weekly', 'monthly']),
+    frequency: z.enum(['1d', '3d', '7d', '1m']),
     stakingEnabled: z.boolean(),
     stakingMode: z.enum(['simple', 'compound']).nullable(),
     compoundingFrequency: z.enum(['daily', 'monthly', 'yearly']).nullable(),

@@ -1,1 +1,22 @@
-{}
+{
+  "title": "Dashboard",
+  "description": "View and manage your Dollar-Cost Averaging (DCA) investment calculations.",
+  "empty": {
+    "title": "No calculations yet",
+    "description": "Create your first DCA calculation to start tracking your investments.",
+    "action": "Create Calculation"
+  },
+  "list": {
+    "totalCapital": "Total Invested",
+    "frequency": "Frequency",
+    "startDate": "Start Date",
+    "viewDetails": "View Details",
+    "edit": "Edit"
+  },
+  "frequencies": {
+    "1d": "Daily",
+    "3d": "Every 3 days",
+    "7d": "Weekly",
+    "1m": "Monthly"
+  }
+}

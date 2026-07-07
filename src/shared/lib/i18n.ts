@@ -17,6 +17,10 @@ void i18next
   .init({
     fallbackLng: 'en',
     supportedLngs: ['en', 'ru'],
+    detection: {
+      order: ['localStorage', 'cookie', 'navigator', 'htmlTag'],
+      caches: ['localStorage', 'cookie'],
+    },
     ns: ['calculator', 'dashboard', 'settings'],
     resources: {
       en: {

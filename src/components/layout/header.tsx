@@ -14,11 +14,11 @@ import {Plus, Settings} from 'lucide-react';
 
 export function Header() {
   return (
-    <header className="sticky left-0 top-0 z-10 px-4 pt-6 flex items-center gap-4">
+    <header className="sticky left-0 top-0 z-10  py-3 pt-6 flex items-center gap-10 border-b">
       <div className="flex gap-1 items-center">
         <h2 className="text-2xl font-bold">Crypto DCA</h2>
       </div>
-      <NavigationMenu>
+      <NavigationMenu className="w-full max-w-none">
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuLink
@@ -30,20 +30,20 @@ export function Header() {
             <NavigationMenuLink
               className={navigationMenuTriggerStyle()}
               render={
-                <Link to={calculatorRoute.to} className="flex">
+                <Link to={calculatorRoute.to} className="flex items-center">
                   New Calculation
-                  <Plus />
+                  <Plus className="size-5" />
                 </Link>
               }
             />
           </NavigationMenuItem>
-          <NavigationMenuItem>
+          <NavigationMenuItem className="ml-auto">
             <NavigationMenuLink
               className={navigationMenuTriggerStyle()}
               render={
-                <Link to={settingsRoute.to} className="flex">
+                <Link to={settingsRoute.to} className="flex items-center">
                   Settings
-                  <Settings />
+                  <Settings className="size-5" />
                 </Link>
               }
             />

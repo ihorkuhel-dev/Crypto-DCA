@@ -8,10 +8,10 @@ interface AppLayoutProps {
 
 export function AppLayout({ children }: AppLayoutProps) {
   return (
-    <div className="flex h-dvh flex-col bg-background text-foreground">
+    <div className="flex px-12 h-dvh flex-col bg-background text-foreground">
       <Header />
       <div className="flex flex-1 min-h-0">
-        <main className="w-full h-full p-4">{children}</main>
+        <main className="w-full h-full py-4 ">{children}</main>
       </div>
       <Footer />
     </div>

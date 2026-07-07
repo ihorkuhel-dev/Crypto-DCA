@@ -1,6 +1,17 @@
-import {binanceClient} from '@/shared/lib/binance-client';
-import {db} from '@/shared/lib/dexie-db';
+import { binanceClient } from '@/shared/lib/binance-client';
+import { db } from '@/shared/lib/dexie-db';
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+/**
+ * Синхронизирует котировки монеты из Binance в локальный Dexie-кэш.
+ *
+ * Обрабатывает три сценария:
+ * 1. Кэша нет — загружаем весь диапазон [startDateTs, today].
+ * 2. Кэш есть, но startDate раньше минимальной кэшированной даты — догружаем исторические данные.
+ * 3. Кэш есть и устарел (последняя запись > 1 дня назад) — докачиваем до сегодня.
+ * 4. Оба условия 2 и 3 верны — выполняем два независимых fetch-запроса.
+ */
 export async function syncKlines(
   symbol: string,
   startDateTs: number,
@@ -9,32 +20,45 @@ export async function syncKlines(
   const todayTs = Date.now();
   const cached = await db.klines.where('symbol').equals(symbol).sortBy('timestamp');
 
-  let needFetch = false;
-  let fetchStart = startDateTs;
-  let fetchEnd = todayTs;
-
-  if (cached.length > 0) {
-    const minCached = cached[0].timestamp;
-    const maxCached = cached[cached.length - 1].timestamp;
-
-    if (startDateTs < minCached) {
-      needFetch = true;
-      fetchEnd = minCached;
-    } else if (todayTs - maxCached > 24 * 60 * 60 * 1000) {
-      needFetch = true;
-      fetchStart = maxCached;
-    }
-  } else {
-    needFetch = true;
+  if (cached.length === 0) {
+    // Кэша нет — загружаем всё
+    await fetchAndStore(symbol, interval, startDateTs, todayTs);
+    return;
   }
 
-  if (needFetch) {
-    const points = await binanceClient.getKlines(symbol, interval, fetchStart, fetchEnd);
-    const records = points.map((p) => ({
-      symbol,
-      timestamp: p.timestamp,
-      price: p.price,
-    }));
-    await db.klines.bulkPut(records);
+  const minCached = cached[0].timestamp;
+  const maxCached = cached[cached.length - 1].timestamp;
+
+  const needHistorical = startDateTs < minCached;
+  const needRecent = todayTs - maxCached > DAY_MS;
+
+  // Выполняем fetch независимо для каждого недостающего диапазона
+  const fetches: Promise<void>[] = [];
+
+  if (needHistorical) {
+    fetches.push(fetchAndStore(symbol, interval, startDateTs, minCached));
   }
+
+  if (needRecent) {
+    fetches.push(fetchAndStore(symbol, interval, maxCached, todayTs));
+  }
+
+  if (fetches.length > 0) {
+    await Promise.all(fetches);
+  }
+}
+
+async function fetchAndStore(
+  symbol: string,
+  interval: string,
+  from: number,
+  to: number,
+): Promise<void> {
+  const points = await binanceClient.getKlines(symbol, interval, from, to);
+  const records = points.map((p) => ({
+    symbol,
+    timestamp: p.timestamp,
+    price: p.price,
+  }));
+  await db.klines.bulkPut(records);
 }

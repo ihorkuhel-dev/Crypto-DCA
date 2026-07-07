@@ -1,1 +1,53 @@
-{}
+{
+  "title": "DCA Calculator",
+  "titleEdit": "Edit Calculation",
+  "description": "Configure coin purchase frequency and amount to backtest your DCA investment strategy.",
+  "descriptionEdit": "Modify parameters and update your existing DCA calculation.",
+  "form": {
+    "symbol": "Select Asset",
+    "startDate": "Start Date",
+    "totalCapitalUsd": "Total Capital (USD)",
+    "frequency": "Purchase Frequency",
+    "stakingEnabled": "Staking (APY)",
+    "stakingMode": "Staking Mode",
+    "apyPercent": "APY Rate (%)",
+    "compoundingFrequency": "Compounding Period"
+  },
+  "frequencies": {
+    "1d": "Daily",
+    "3d": "Every 3 days",
+    "7d": "Weekly",
+    "1m": "Monthly"
+  },
+  "stakingModes": {
+    "simple": "Simple Interest",
+    "compound": "Compound Interest"
+  },
+  "compounding": {
+    "daily": "Daily",
+    "monthly": "Monthly",
+    "yearly": "Yearly"
+  },
+  "hints": {
+    "dca": "Will make {{count}} purchases. One transaction amount: {{amount}}.",
+    "staking": "Staking reward: +{{yield}} {{symbol}} over the entire period.",
+    "loadingPrice": "Fetching historical prices...",
+    "noHistory": "Select a coin to preview historical prices."
+  },
+  "actions": {
+    "create": "Calculate & Add",
+    "save": "Save Changes",
+    "cancel": "Cancel"
+  },
+  "validation": {
+    "symbol": "Please select a coin",
+    "startDate": "Start date must be in the past",
+    "capital": "Capital must be at least $10",
+    "apy": "APY rate must be positive"
+  },
+  "toast": {
+    "created": "Calculation created successfully",
+    "updated": "Calculation updated successfully",
+    "error": "Failed to save calculation"
+  }
+}

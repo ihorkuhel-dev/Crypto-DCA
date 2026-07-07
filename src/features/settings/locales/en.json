@@ -19,5 +19,16 @@
       "de": "German"
     }
   },
-  "title": "Settings"
+  "title": "Settings",
+  "dangerZone": {
+    "title": "Danger Zone",
+    "deleteButton": "Delete all data",
+    "dialog": {
+      "title": "Are you absolutely sure?",
+      "description": "This action cannot be undone. This will permanently delete all your calculations, transactions, cache files and reset all settings to defaults.",
+      "confirm": "Delete",
+      "cancel": "Cancel"
+    },
+    "success": "All data has been successfully deleted"
+  }
 }

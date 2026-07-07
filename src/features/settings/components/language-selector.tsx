@@ -33,7 +33,7 @@ export function LanguageSelector() {
   const items = useMemo(() => {
     return supportedLngs.map((lng) => ({
       value: lng,
-      label: t(`language.options.${lng}`, lng.toUpperCase()) as string,
+      label: (t(`language.options.${lng}`) || lng.toUpperCase()) as string,
     }));
   }, [supportedLngs, t]);
 
@@ -46,16 +46,16 @@ export function LanguageSelector() {
 
   return (
     <Field>
-      <FieldLabel>{t('language.label', 'Select language:')}</FieldLabel>
+      <FieldLabel>{t('language.label')}</FieldLabel>
       <Select value={currentLanguage} onValueChange={handleLanguageChange}>
         <SelectTrigger className="w-full max-w-48">
-          <SelectValue placeholder={t('language.placeholder', 'Select language')}>
+          <SelectValue placeholder={t('language.placeholder')}>
             {currentLabel}
           </SelectValue>
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>{t('language.title', 'Language')}</SelectLabel>
+            <SelectLabel>{t('language.title')}</SelectLabel>
             {items.map((item) => (
               <SelectItem key={item.value} value={item.value}>
                 {item.label}

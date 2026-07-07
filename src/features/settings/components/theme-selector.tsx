@@ -16,9 +16,9 @@ export function ThemeSelector() {
   const { t } = useTranslation('settings');
 
   const items = useMemo(() => [
-    { label: t('theme.options.system', 'System'), value: 'system' },
-    { label: t('theme.options.light', 'Light'), value: 'light' },
-    { label: t('theme.options.dark', 'Dark'), value: 'dark' },
+    { label: t('theme.options.system'), value: 'system' },
+    { label: t('theme.options.light'), value: 'light' },
+    { label: t('theme.options.dark'), value: 'dark' },
   ], [t]);
 
   const { theme, setTheme } = useTheme();
@@ -33,18 +33,18 @@ export function ThemeSelector() {
 
   return (
     <Field>
-      <FieldLabel>{t('theme.label', 'Select theme:')}</FieldLabel>
+      <FieldLabel>{t('theme.label')}</FieldLabel>
       <Select
         items={items}
         value={theme}
         onValueChange={handleThemeChange}
       >
         <SelectTrigger className="w-full max-w-48">
-          <SelectValue placeholder={t('theme.placeholder', 'Select theme')} />
+          <SelectValue placeholder={t('theme.placeholder')} />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>{t('theme.title', 'Theme')}</SelectLabel>
+            <SelectLabel>{t('theme.title')}</SelectLabel>
             {items.map((item) => (
               <SelectItem key={item.value} value={item.value}>
                 {item.label}

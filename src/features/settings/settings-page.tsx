@@ -1,7 +1,9 @@
+import {ThemeSelector} from '@/features/settings/components/theme-selector.tsx';
+
 export function SettingsPage() {
   return (
     <>
-      <h1>Settings</h1>
+      <ThemeSelector />
     </>
   );
 }
